@@ -12,6 +12,7 @@ const CreateProfile = () => {
   
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const [userNameError, setuserNameError] = useState("");
 
@@ -42,11 +43,14 @@ const CreateProfile = () => {
     formData.append("dob", dob);
 
     axios
-      .post("http://localhost:3000/api/profile", formData)                         //development
-      // .post("https://onboard-social-media-app-1.onrender.com/api/profile", formData) //production
+      .post("http://localhost:3000/api/profile/create", formData, { withCredentials: true })                         //development
+      // .post("https://onboard-social-media-app-1.onrender.com/api/profile/create", formData, { withCredentials: true }) //production
       .then((res) => {
         setIsSuccess(true);
-        navigate('/feed');
+        setIsAnimating(true);
+        setTimeout(() => {
+          navigate('/feed');
+        }, 2000);
       })
       .catch((err) => {
         const message = err.response?.data?.message;
@@ -62,7 +66,8 @@ const CreateProfile = () => {
   };
 
   return (
-    <div className="create-profile-container">
+    <>
+    <div className={`create-profile-container ${isAnimating ? 'blur-background' : ''}`}>
       <div className="create-profile-card">
         <h1 className="title">Setup Your Profile</h1>
         <p className="subtitle">Let's get you ready for the journey</p>
@@ -126,11 +131,26 @@ const CreateProfile = () => {
           </div>
 
           <button type="submit" className="create-btn" disabled={isLoading}>
-            {isLoading ? <span className="spinner"></span> : "CREATE PROFILE"}
+            {isLoading ? (
+              <>
+                <span className="spinner" style={{ marginRight: '8px' }}></span>
+                CREATING...
+              </>
+            ) : (
+              "CREATE PROFILE"
+            )}
           </button>
         </form>
       </div>
     </div>
+    
+    {isAnimating && (
+      <div className="global-overlay">
+        <div className="global-spinner"></div>
+        <h2>Creating profile...</h2>
+      </div>
+    )}
+    </>
   );
 };
 

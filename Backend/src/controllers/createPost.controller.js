@@ -1,4 +1,5 @@
 import { postModel } from '../models/post.model.js';
+import profileModel from '../models/profile.model.js';
 import uploadFile from '../services/storage.service.js';
 
 async function createPost(req, res) {
@@ -11,7 +12,14 @@ async function createPost(req, res) {
 
         const result = await uploadFile(req.file.buffer);
 
+        const profile = await profileModel.findOne({ user: req.user.id });
+        if (!profile) {
+            return res.status(404).json({ message: "Profile not found" });
+        }
+
         const post = await postModel.create({
+            user: req.user.id,
+            profile: profile._id,
             image: result.url,
             caption: req.body.caption
         });

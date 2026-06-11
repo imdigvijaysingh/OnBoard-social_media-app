@@ -15,6 +15,9 @@ const profileSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    dob: {
+      type: String,
+    },
   },
   {
     timestamps: true,

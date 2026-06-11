@@ -106,6 +106,7 @@ export async function login(req, res) {
         maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     })
 
+    const profile = await profileModel.findOne({ user: user._id });
 
     return res.status(200).json({
       message: "User logged in successfully",
@@ -113,7 +114,8 @@ export async function login(req, res) {
         username: user.username,
         email: user.email
       },
-        accessToken
+      hasProfile: !!profile,
+      accessToken
     });
 }
 
@@ -142,12 +144,46 @@ export async function verifyEmail(req, res) {
       user: otpDoc.user
     })
 
+    const refreshToken = jwt.sign({
+      id: user._id,
+    }, config.JWT_SECRET, 
+      {
+          expiresIn: "7d" 
+      } 
+    )
+
+    const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
+
+    const session = await sessionModel.create({
+      user: user._id,
+      refreshTokenHash,
+      ip: req.ip,
+      userAgent: req.headers[ "user-agent" ]
+    })
+
+    const accessToken = jwt.sign({
+      id: user._id,
+      sessionId: session._id
+    }, config.JWT_SECRET, 
+        {
+            expiresIn: "15m"
+        }
+    )
+
+    res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+    })
+
     return res.status(200).json({
       message: "Email verified successfully",
       user: {
         email: user.email,
         verified: true
-      }
+      },
+      accessToken
     })
 }
 
@@ -158,4 +194,40 @@ export async function logout(req, res) {
   res.status(200).json({
     message: "User logged out successfully!"
   })
+}
+
+export async function resendOtp(req, res) {
+    const { email } = req.body;
+
+    if (!email) {
+        return res.status(400).json({
+            message: "Email is required"
+        });
+    }
+
+    const user = await userModel.findOne({ email });
+
+    if (!user) {
+        return res.status(404).json({
+            message: "User not found"
+        });
+    }
+
+    await otpModel.deleteMany({ user: user._id });
+
+    const otp = generateOtp();
+    const html = getOtpHtml(otp, user.firstName);
+    const otpHash = await bcrypt.hash(otp, 10);
+
+    await otpModel.create({
+      email,
+      user: user._id,
+      otpHash
+    });
+
+    await sendEmail(email, "Verify your account", `Your OTP is: ${otp}`, html, user.firstName);
+
+    return res.status(200).json({
+        message: "OTP sent successfully"
+    });
 }

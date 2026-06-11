@@ -18,7 +18,7 @@ export async function createProfile(req, res) {
 
         const result = await uploadFile(req.file.buffer); 
 
-        const { profilePhoto, userName } = req.body;
+        const { profilePhoto, userName, dob } = req.body;
 
         const isUserNameAlreadyExists = await profileModel.findOne({
             userName,
@@ -33,14 +33,16 @@ export async function createProfile(req, res) {
         const profile = await profileModel.create({
             user: req.user.id,
             profilePhoto: result.url,
-            userName
+            userName,
+            dob
         });
 
         return res.status(201).json({
             message: "Profile created successfully",
             user: {
                 profilePhoto: profile.profilePhoto,
-                userName: profile.userName
+                userName: profile.userName,
+                dob: profile.dob
             }
         });
 
@@ -66,8 +68,10 @@ export async function getMe(req, res) {
         return res.status(200).json({
             message: "User fetched successfully",
             user: {
+                userId: req.user.id,
                 profilePhoto: user.profilePhoto,
-                userName: user.userName
+                userName: user.userName,
+                dob: user.dob
             }
         });
     } catch (err) {

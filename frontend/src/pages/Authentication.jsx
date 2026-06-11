@@ -20,6 +20,9 @@ const Authentication = () => {
   const [verifiedEmail, setVerifiedEmail] = useState("");
   const otpRefs = useRef([]);
 
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [animationText, setAnimationText] = useState("");
+
   const navigate = useNavigate();
 
   const [isLogin, setIsLogin] = useState(true);
@@ -69,9 +72,17 @@ const Authentication = () => {
           // .post("https://onboard-social-media-app-1.onrender.com/api/auth/login", {
           email: formData.get("email"),
           password: formData.get("password"),
-        })
-        .then(() => {
-          navigate("/feed");
+        }, { withCredentials: true })
+        .then((res) => {
+          setAnimationText("Logging in...");
+          setIsAnimating(true);
+          setTimeout(() => {
+            if (res.data.hasProfile) {
+              navigate("/feed");
+            } else {
+              navigate("/profile");
+            }
+          }, 2000);
         })
         .catch((err) => {
           const message = err.response?.data?.message;
@@ -139,9 +150,13 @@ const Authentication = () => {
         // .post("https://onboard-social-media-app-1.onrender.com/api/auth/verify-email", {
         email,
         otp,
-      })
+      }, { withCredentials: true })
       .then(() => {
-        navigate("/profile");
+        setAnimationText("Signing up...");
+        setIsAnimating(true);
+        setTimeout(() => {
+          navigate("/profile");
+        }, 2000);
       })
       .catch((err) => {
         const message =
@@ -151,8 +166,22 @@ const Authentication = () => {
       });
   };
 
+  const handleResendOtp = async () => {
+    try {
+      setOtpError("");
+      await axios.post("http://localhost:3000/api/auth/resend-otp", {
+        // "https://onboard-social-media-app-1.onrender.com/api/auth/resend-otp"
+        email: verifiedEmail,
+      });
+      setOtpError("OTP resent successfully!");
+    } catch (err) {
+      setOtpError(err.response?.data?.message || "Failed to resend OTP.");
+    }
+  };
+
   return (
-    <div className="auth-page">
+    <>
+    <div className={`auth-page ${isAnimating ? 'blur-background' : ''}`}>
       <div className="auth-container">
         <div className={`auth-card ${showOtp ? "otp-mode" : ""}`}>
           {/* ── LOGIN PANEL ── */}
@@ -339,6 +368,14 @@ const Authentication = () => {
                     "VERIFY EMAIL"
                   )}
                 </button>
+                <div className="otp-resend" style={{ marginTop: '16px', textAlign: 'center' }}>
+                  <p style={{ fontSize: '14px', color: '#666' }}>Didn't receive the code?</p>
+                  <button type="button" onClick={handleResendOtp} className="resend-btn" style={{ 
+                    background: 'none', border: 'none', color: '#5046e4', cursor: 'pointer', fontWeight: '600', marginTop: '8px'
+                  }}>
+                    Resend OTP
+                  </button>
+                </div>
               </form>
             </div>
           </div>
@@ -381,6 +418,14 @@ const Authentication = () => {
         </div>
       </div>
     </div>
+    
+    {isAnimating && (
+      <div className="global-overlay">
+        <div className="global-spinner"></div>
+        <h2>{animationText}</h2>
+      </div>
+    )}
+    </>
   );
 };
 
