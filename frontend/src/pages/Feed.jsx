@@ -18,8 +18,8 @@ const Feed = () => {
     try {
       setIsLoggingOut(true);
       await axios.post(
-        "http://localhost:3000/api/auth/logout", //development
-        // "https://onboardsocial.netlify.app/api/auth/logout",  //production
+        // "http://localhost:3000/api/auth/logout", //development
+        "https://onboardsocial.netlify.app/api/auth/logout",  //production
         {},
         { withCredentials: true },
       );

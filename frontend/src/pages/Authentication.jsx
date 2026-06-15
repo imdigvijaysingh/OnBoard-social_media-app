@@ -46,8 +46,8 @@ const Authentication = () => {
       // Sign Up
       const email = formData.get("email");
       axios
-        .post("http://localhost:3000/api/auth/signup", {
-          // .post("https://onboard-social-media-app-1.onrender.com/api/auth/signup", {
+        // .post("http://localhost:3000/api/auth/signup", {
+          .post("https://onboard-social-media-app-1.onrender.com/api/auth/signup", {
           firstName: formData.get("firstName"),
           lastName: formData.get("lastName"),
           email,
@@ -68,8 +68,8 @@ const Authentication = () => {
     } else {
       // Log In
       axios
-        .post("http://localhost:3000/api/auth/login", {
-          // .post("https://onboard-social-media-app-1.onrender.com/api/auth/login", {
+        // .post("http://localhost:3000/api/auth/login", {
+          .post("https://onboard-social-media-app-1.onrender.com/api/auth/login", {
           email: formData.get("email"),
           password: formData.get("password"),
         }, { withCredentials: true })
@@ -146,8 +146,8 @@ const Authentication = () => {
     const otp = code;
 
     axios
-      .post("http://localhost:3000/api/auth/verify-email", {
-        // .post("https://onboard-social-media-app-1.onrender.com/api/auth/verify-email", {
+      // .post("http://localhost:3000/api/auth/verify-email", {
+        .post("https://onboard-social-media-app-1.onrender.com/api/auth/verify-email", {
         email,
         otp,
       }, { withCredentials: true })
@@ -166,18 +166,18 @@ const Authentication = () => {
       });
   };
 
-  const handleResendOtp = async () => {
-    try {
-      setOtpError("");
-      await axios.post("http://localhost:3000/api/auth/resend-otp", {
-        // "https://onboard-social-media-app-1.onrender.com/api/auth/resend-otp"
-        email: verifiedEmail,
-      });
-      setOtpError("OTP resent successfully!");
-    } catch (err) {
-      setOtpError(err.response?.data?.message || "Failed to resend OTP.");
-    }
-  };
+  // const handleResendOtp = async () => {
+  //   try {
+  //     setOtpError("");
+  //     // await axios.post("http://localhost:3000/api/auth/resend-otp", {
+  //       "https://onboard-social-media-app-1.onrender.com/api/auth/resend-otp"
+  //       email: verifiedEmail,
+  //     });
+  //     setOtpError("OTP resent successfully!");
+  //   } catch (err) {
+  //     setOtpError(err.response?.data?.message || "Failed to resend OTP.");
+  //   }
+  // };
 
   return (
     <>

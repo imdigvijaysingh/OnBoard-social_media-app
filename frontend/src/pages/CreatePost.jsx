@@ -11,8 +11,8 @@ const CreatePost = ({ onClose }) => {
     const formData = new FormData(e.target);
 
     axios
-      .post("http://localhost:3000/api/create-post", formData, { withCredentials: true })                          //development
-      // .post("https://onboard-social-media-app-1.onrender.com/api/create-post", formData, { withCredentials: true })  //production
+      // .post("http://localhost:3000/api/create-post", formData, { withCredentials: true })                          //development
+      .post("https://onboard-social-media-app-1.onrender.com/api/create-post", formData, { withCredentials: true })  //production
       .then((res) => {
         setIsAnimating(true);
         setTimeout(() => {
