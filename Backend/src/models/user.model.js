@@ -15,12 +15,39 @@ const userSchema = new mongoose.Schema({
     }, 
     password: {
       type: String,
-      required: [ true, "Password is required" ]
+      required: function () {
+        return this.authProvider === 'local';
+      },
+    },
+    authProvider: {
+      type: String,
+      enum: ["local", "google"],
+      default: "local",
+    },
+    googleId: {
+      type: String,
+      default: null,
+    },
+    googlePicture: {
+      type: String,
+      default: null,
+    },
+    cloudBackupEnabled: {
+      type: Boolean,
+      default: true,
     },
     verified: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
+    failedLoginAttempts: {
+      type: Number,
+      default: 0,
+    },
+    lockUntil: {
+      type: Date,
+      default: null,
+    },
 }, {
     timestamps: true
 });

@@ -1,0 +1,1379 @@
+/* =============================================================
+   Dual Deck — Relationship Space Styles
+   A private, shared digital space between two people.
+   ============================================================= */
+
+/* ─── Deck Selector (list view of all your decks) ─── */
+.dd-deck-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.dd-deck-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.dd-deck-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: 20px 20px 0 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.dd-deck-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(99, 102, 241, 0.12);
+  border-color: #c7d2fe;
+}
+
+.dd-deck-card:hover::before {
+  opacity: 1;
+}
+
+.dd-deck-card-avatars {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 16px;
+}
+
+.dd-deck-card-avatars img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.dd-deck-card-avatars img:last-child {
+  margin-left: -16px;
+}
+
+.dd-deck-card-link-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 11px;
+  margin-left: -8px;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.dd-deck-card-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.dd-deck-card-label {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.dd-deck-card-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dd-deck-card-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.dd-deck-card-stat-value {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.dd-deck-card-stat-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ─── Deck Header (linked avatars + stats bar) ─── */
+.dd-header {
+  padding: 28px 32px;
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.dd-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.dd-header-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.dd-header-pair {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.dd-header-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.9);
+  object-fit: cover;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s;
+}
+
+.dd-header-avatar:hover {
+  transform: scale(1.08);
+}
+
+.dd-header-link-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 16px;
+  margin: 0 -8px;
+  z-index: 2;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dd-header-info {
+  margin-left: 16px;
+}
+
+.dd-header-name {
+  font-size: 22px;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.dd-header-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.15);
+  padding: 2px 12px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-top: 4px;
+  backdrop-filter: blur(4px);
+}
+
+.dd-header-stats {
+  display: flex;
+  gap: 24px;
+}
+
+.dd-header-stat {
+  text-align: center;
+}
+
+.dd-header-stat-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.dd-header-stat-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.75);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.dd-header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.dd-header-action-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  backdrop-filter: blur(4px);
+}
+
+.dd-header-action-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.1);
+}
+
+/* ─── Tab Navigation ─── */
+.dd-tabs {
+  display: flex;
+  gap: 4px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 4px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.dd-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.dd-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.dd-tab:hover {
+  color: #6366f1;
+  background: #eef2ff;
+}
+
+.dd-tab.active {
+  background: #6366f1;
+  color: white;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.dd-tab i {
+  font-size: 14px;
+}
+
+.dd-tab-badge {
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 1px 7px;
+  border-radius: 999px;
+}
+
+.dd-tab.active .dd-tab-badge {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ─── Timeline ─── */
+.dd-timeline {
+  position: relative;
+  padding-left: 32px;
+}
+
+.dd-timeline::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #c4b5fd, #a78bfa, #8b5cf6);
+  border-radius: 4px;
+}
+
+.dd-timeline-entry {
+  position: relative;
+  margin-bottom: 32px;
+  animation: dd-fade-in 0.4s ease-out;
+}
+
+.dd-timeline-dot {
+  position: absolute;
+  left: -25px;
+  top: 16px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #8b5cf6;
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 0 3px #ddd6fe, 0 2px 6px rgba(139, 92, 246, 0.3);
+  z-index: 2;
+}
+
+.dd-timeline-dot.auto {
+  background: #f59e0b;
+  box-shadow: 0 0 0 3px #fef3c7, 0 2px 6px rgba(245, 158, 11, 0.3);
+}
+
+.dd-timeline-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 20px;
+  transition: all 0.3s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.dd-timeline-card:hover {
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.1);
+  border-color: #c7d2fe;
+}
+
+.dd-timeline-card.auto {
+  background: linear-gradient(135deg, #fffbeb, #fef3c7);
+  border-color: #fde68a;
+}
+
+.dd-timeline-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.dd-timeline-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dd-timeline-card-date {
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.dd-timeline-card-caption {
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.dd-timeline-card-location {
+  font-size: 11px;
+  color: #8b5cf6;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.dd-timeline-card-photos {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.dd-timeline-card-photos::-webkit-scrollbar {
+  display: none;
+}
+
+.dd-timeline-card-photo {
+  width: 120px;
+  height: 90px;
+  border-radius: 12px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid #e2e8f0;
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.dd-timeline-card-photo:hover {
+  transform: scale(1.05);
+}
+
+.dd-timeline-card-reactions {
+  display: flex;
+  gap: 6px;
+}
+
+.dd-timeline-reaction {
+  font-size: 13px;
+  background: #f1f5f9;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dd-timeline-reaction:hover {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+}
+
+.dd-timeline-reaction img {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.dd-timeline-auto-badge {
+  font-size: 10px;
+  font-weight: 700;
+  color: #92400e;
+  background: #fef3c7;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid #fde68a;
+}
+
+/* ─── Bucket List ─── */
+.dd-bucket-progress {
+  background: #f1f5f9;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+.dd-bucket-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.dd-bucket-progress-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.dd-bucket-progress-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: #6366f1;
+}
+
+.dd-bucket-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.dd-bucket-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dd-bucket-categories {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.dd-bucket-category-pill {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dd-bucket-category-pill:hover {
+  border-color: #c7d2fe;
+  color: #6366f1;
+}
+
+.dd-bucket-category-pill.active {
+  background: #6366f1;
+  color: white;
+  border-color: #6366f1;
+}
+
+.dd-bucket-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dd-bucket-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  transition: all 0.25s;
+  cursor: pointer;
+}
+
+.dd-bucket-item:hover {
+  border-color: #c7d2fe;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08);
+}
+
+.dd-bucket-item.completed {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.dd-bucket-item.pinned {
+  border-color: #fde68a;
+  background: #fffbeb;
+}
+
+.dd-bucket-checkbox {
+  width: 22px;
+  height: 22px;
+  border-radius: 8px;
+  border: 2px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.dd-bucket-checkbox.checked {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.dd-bucket-item-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+  flex: 1;
+}
+
+.dd-bucket-item.completed .dd-bucket-item-title {
+  text-decoration: line-through;
+  color: #94a3b8;
+}
+
+.dd-bucket-item-emoji {
+  font-size: 20px;
+}
+
+.dd-bucket-item-pin {
+  font-size: 12px;
+  color: #f59e0b;
+}
+
+.dd-bucket-item-date {
+  font-size: 10px;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+/* ─── Scrapbook ─── */
+.dd-scrapbook-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.dd-scrapbook-chapter {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  aspect-ratio: 4 / 3;
+  group: true;
+}
+
+.dd-scrapbook-chapter:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+}
+
+.dd-scrapbook-chapter-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.dd-scrapbook-chapter:hover .dd-scrapbook-chapter-cover {
+  transform: scale(1.08);
+}
+
+.dd-scrapbook-chapter-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.7) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 16px;
+}
+
+.dd-scrapbook-chapter-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dd-scrapbook-chapter-count {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Scrapbook expanded chapter view */
+.dd-scrapbook-expanded {
+  animation: dd-fade-in 0.3s ease-out;
+}
+
+.dd-scrapbook-expanded-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.dd-scrapbook-expanded-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.dd-scrapbook-expanded-back {
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dd-scrapbook-expanded-back:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.dd-scrapbook-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+}
+
+.dd-scrapbook-photo {
+  border-radius: 12px;
+  object-fit: cover;
+  width: 100%;
+  aspect-ratio: 1;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 2px solid transparent;
+}
+
+.dd-scrapbook-photo:hover {
+  transform: scale(1.03);
+  border-color: #8b5cf6;
+  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.2);
+}
+
+/* ─── Rituals ─── */
+.dd-rituals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.dd-ritual-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 20px;
+  transition: all 0.3s;
+}
+
+.dd-ritual-card:hover {
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.1);
+  border-color: #c7d2fe;
+}
+
+.dd-ritual-card.inactive {
+  opacity: 0.5;
+}
+
+.dd-ritual-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.dd-ritual-emoji {
+  font-size: 28px;
+}
+
+.dd-ritual-streak {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #f59e0b;
+  background: #fffbeb;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid #fde68a;
+}
+
+.dd-ritual-streak.fire {
+  color: #ef4444;
+  background: #fef2f2;
+  border-color: #fecaca;
+}
+
+.dd-ritual-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.dd-ritual-schedule {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.dd-ritual-best {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.dd-ritual-history {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dd-ritual-history-entry {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #475569;
+  padding: 6px 10px;
+  background: #f8fafc;
+  border-radius: 10px;
+}
+
+.dd-ritual-history-entry-date {
+  font-weight: 700;
+  color: #6366f1;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+/* ─── Love Notes ─── */
+.dd-notes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dd-notes-jar {
+  background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+  border: 2px dashed #c4b5fd;
+  border-radius: 24px;
+  padding: 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.dd-notes-jar:hover {
+  background: linear-gradient(135deg, #ddd6fe, #c4b5fd);
+  transform: scale(1.02);
+}
+
+.dd-notes-jar-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  display: block;
+  animation: dd-jar-wobble 3s ease-in-out infinite;
+}
+
+.dd-notes-jar-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: #5b21b6;
+  margin-bottom: 4px;
+}
+
+.dd-notes-jar-sublabel {
+  font-size: 12px;
+  color: #7c3aed;
+}
+
+.dd-notes-daily-prompt {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 1px solid #fcd34d;
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dd-notes-daily-prompt-icon {
+  font-size: 24px;
+}
+
+.dd-notes-daily-prompt-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #92400e;
+  flex: 1;
+}
+
+.dd-notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dd-note-card {
+  padding: 16px 20px;
+  border-radius: 18px;
+  max-width: 85%;
+  animation: dd-fade-in 0.4s ease-out;
+  position: relative;
+}
+
+.dd-note-card.from-partner {
+  background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+  border: 1px solid #c4b5fd;
+  align-self: flex-start;
+  border-bottom-left-radius: 6px;
+}
+
+.dd-note-card.from-me {
+  background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+  border: 1px solid #c7d2fe;
+  align-self: flex-end;
+  border-bottom-right-radius: 6px;
+}
+
+.dd-note-card.unread {
+  box-shadow: 0 0 0 2px #8b5cf6, 0 8px 24px rgba(139, 92, 246, 0.2);
+}
+
+.dd-note-sticker {
+  position: absolute;
+  top: -8px;
+  right: -4px;
+  font-size: 20px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+
+.dd-note-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e1b4b;
+  line-height: 1.5;
+}
+
+.dd-note-time {
+  font-size: 10px;
+  color: #7c3aed;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.dd-note-card.from-me .dd-note-time {
+  color: #6366f1;
+  text-align: right;
+}
+
+/* ─── Add Note Composer ─── */
+.dd-note-composer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 10px 14px;
+}
+
+.dd-note-composer input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #0f172a;
+  background: transparent;
+  font-family: inherit;
+}
+
+.dd-note-composer input::placeholder {
+  color: #94a3b8;
+}
+
+.dd-note-send-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #6366f1;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.dd-note-send-btn:hover {
+  background: #4f46e5;
+  transform: scale(1.08);
+}
+
+/* ─── Shared Passport (Map placeholder) ─── */
+.dd-passport-map-placeholder {
+  background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+  border: 2px dashed #7dd3fc;
+  border-radius: 24px;
+  padding: 48px 32px;
+  text-align: center;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.dd-passport-stats {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.dd-passport-stat {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px 24px;
+  text-align: center;
+  min-width: 120px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.dd-passport-stat-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.dd-passport-stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dd-passport-places {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.dd-passport-place {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  transition: all 0.2s;
+}
+
+.dd-passport-place:hover {
+  border-color: #c7d2fe;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08);
+}
+
+.dd-passport-place-pin {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.dd-passport-place-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.dd-passport-place-date {
+  font-size: 10px;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+/* ─── Chat Customization Modal ─── */
+.dd-chat-customization {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dd-chat-theme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.dd-chat-theme-card {
+  border-radius: 14px;
+  padding: 16px 12px;
+  text-align: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.25s;
+}
+
+.dd-chat-theme-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.dd-chat-theme-card.active {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+.dd-chat-theme-preview {
+  font-size: 28px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.dd-chat-theme-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.dd-sound-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 8px;
+}
+
+.dd-sound-card {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dd-sound-card:hover {
+  border-color: #c7d2fe;
+  background: #eef2ff;
+}
+
+.dd-sound-card.active {
+  border-color: #6366f1;
+  background: #eef2ff;
+  box-shadow: 0 0 0 1px #6366f1;
+}
+
+.dd-sound-icon {
+  font-size: 22px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.dd-sound-name {
+  font-size: 10px;
+  font-weight: 700;
+  color: #475569;
+}
+
+/* ─── Create / Invite Deck Modal ─── */
+.dd-invite-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: dd-fade-in 0.2s ease-out;
+}
+
+.dd-invite-modal {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 32px;
+  width: 90%;
+  max-width: 480px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
+  animation: dd-slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dd-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ─── Floating Add Memory / Action Button ─── */
+.dd-fab {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
+  transition: all 0.3s;
+  z-index: 50;
+}
+
+.dd-fab:hover {
+  transform: scale(1.1) translateY(-2px);
+  box-shadow: 0 12px 40px rgba(99, 102, 241, 0.5);
+}
+
+.dd-fab:active {
+  transform: scale(0.95);
+}
+
+/* ─── Empty States ─── */
+.dd-empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: #94a3b8;
+}
+
+.dd-empty-state-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: block;
+  opacity: 0.6;
+}
+
+.dd-empty-state-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.dd-empty-state-subtext {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* ─── Animations ─── */
+@keyframes dd-fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes dd-slide-up {
+  from { opacity: 0; transform: translateY(40px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes dd-jar-wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 640px) {
+  .dd-header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dd-header-stats {
+    gap: 16px;
+  }
+
+  .dd-header-avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  .dd-header-link-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
+  }
+
+  .dd-header-name {
+    font-size: 18px;
+  }
+
+  .dd-tabs {
+    gap: 2px;
+    padding: 3px;
+  }
+
+  .dd-tab {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .dd-tab span {
+    display: none;
+  }
+
+  .dd-timeline {
+    padding-left: 24px;
+  }
+
+  .dd-timeline::before {
+    left: 11px;
+  }
+
+  .dd-timeline-dot {
+    left: -19px;
+    width: 12px;
+    height: 12px;
+  }
+
+  .dd-scrapbook-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .dd-rituals-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dd-note-card {
+    max-width: 92%;
+  }
+
+  .dd-fab {
+    bottom: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+}

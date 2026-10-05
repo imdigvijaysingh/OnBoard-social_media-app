@@ -3,7 +3,11 @@ import connectDB from './src/config/db.js';
 import config from './src/config/config.js';
 import chalk from 'chalk';
 
-connectDB();
+import { seedDiscoverPostsIfEmpty } from './src/utils/seedDiscover.js';
+
+connectDB().then(() => {
+    seedDiscoverPostsIfEmpty();
+});
 
 const PORT = config.PORT;
 
